@@ -1,0 +1,26 @@
+{
+  "name": "middler",
+  "version": "0.0.0",
+  "description": "A trivial middleware runner",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/carlos8f/node-middler.git"
+  },
+  "keywords": [
+    "middleware",
+    "http",
+    "server"
+  ],
+  "author": "Carlos Rodriguez",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}
