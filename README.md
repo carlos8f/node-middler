@@ -13,10 +13,11 @@ var middler = require('middler')
 
 var server = http.createServer();
 middler(server, [
+  buffet,
   function(req, res, next) {
     // ... do some stuff
+    next();
   },
-  buffet,
   buffet.notFound
 ]);
 ```
