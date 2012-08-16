@@ -1,6 +1,6 @@
 {
   "name": "middler",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A trivial middleware runner",
   "main": "index.js",
   "scripts": {
