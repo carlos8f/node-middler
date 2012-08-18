@@ -50,6 +50,23 @@ middler(server)
   });
 ```
 
+Multiple paths/methods/handlers
+-------------------------------
+
+```javascript
+middler(server)
+  .add(['get', 'post'], '/', function (req, res, next) {
+    // handle both get and post requests
+  });
+
+// Or add multiple handlers
+function bodyParser (req, res, next) { req.body = ... }
+function formHandler (req, res, next) { use req.body ... }
+
+middler(server)
+  .post('/posts', [bodyParser, formHandler]);
+```
+
 [union](https://github.com/flatiron/union) compatibility
 --------------------------------------------------------
 
