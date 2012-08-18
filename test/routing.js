@@ -1,31 +1,35 @@
-var middler = require('../')
-  , assert = require('assert')
-
 describe('routing', function () {
-  var baseUrl, server;
+  var baseUrl, server, rootArgs = {
+    method: 'get',
+    path: '/',
+    fn: function (req, res, next) {
+      writeRes(res, 'welcome');
+    }
+  };
   before(function (done) {
     listen(function (s, port) {
       server = s;
       baseUrl = 'http://localhost:' + port;
       middler(server)
-        .add('get', '/', function (req, res, next) {
-          writeOK(res, 'welcome');
-        })
+        .add(rootArgs)
         .add('post', '/posts', function (req, res, next) {
           var data = '';
           req.on('data', function (chunk) {
             data += chunk;
           });
-          req.on('end', function () {
+          req.once('end', function () {
             assert.deepEqual(JSON.parse(data), {post: 'my post'});
-            writeOK(res, 'post created');
+            writeRes(res, 'post created');
           });
         })
         .add('get', '/posts', function (req, res, next) {
-          writeOK(res, 'list of posts');
+          writeRes(res, 'list of posts');
         })
         .add('get', '/posts/:post', function (req, res, next) {
-          writeOK(res, 'post: ' + req.params.post);
+          writeRes(res, 'post: ' + req.params.post);
+        })
+        .add(function (req, res) {
+          writeRes(res, 'not found', 404);
         });
       done();
     });
@@ -57,19 +61,30 @@ describe('routing', function () {
   it('get /posts/:post', function (done) {
     request.get(baseUrl + '/posts/512', function (res) {
       assertRes(res, 'post: 512');
-      server.once('close', done);
-      server.close();
+      done();
     });
   });
+
+  it('can remove a middleware', function (done) {
+    middler(server).remove(rootArgs);
+    request.get(baseUrl + '/', function (res) {
+      assertRes(res, 'not found', 404);
+      done();
+    });
+  });
+
+  it('can add a middleware to run first', function (done) {
+    middler(server).first('/posts', function (req, res, next) {
+      writeRes(res, 'whoa!', 500);
+    });
+    request.get(baseUrl + '/posts', function (res) {
+      assertRes(res, 'whoa!', 500);
+      done();
+    });
+  });
+
+  it('closes the server', function (done) {
+    server.once('close', done);
+    server.close();
+  });
 });
-
-function writeOK (res, body) {
-  res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-  res.end(body);
-}
-
-function assertRes (res, body) {
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.headers['content-type'], 'text/plain; charset=utf-8');
-  assert.equal(res.text, body);
-}
