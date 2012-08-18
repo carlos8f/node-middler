@@ -12,7 +12,7 @@ describe('routing', function () {
       baseUrl = 'http://localhost:' + port;
       middler(server)
         .add(rootArgs)
-        .add('post', '/posts', function (req, res, next) {
+        .post('/posts', function (req, res, next) {
           var data = '';
           req.on('data', function (chunk) {
             data += chunk;
@@ -22,10 +22,10 @@ describe('routing', function () {
             writeRes(res, 'post created');
           });
         })
-        .add('get', '/posts', function (req, res, next) {
+        .get('/posts', function (req, res, next) {
           writeRes(res, 'list of posts');
         })
-        .add('get', '/posts/:post', function (req, res, next) {
+        .get('/posts/:post', function (req, res, next) {
           writeRes(res, 'post: ' + req.params.post);
         })
         .add(function (req, res) {
