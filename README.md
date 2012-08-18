@@ -6,10 +6,10 @@ A trivial middleware runner
 Idea
 ----
 
-middler is a lightweight middleware runner for Node.js, packing
-[express](https://github.com/visionmedia/express)-like routing and full
-[connect](https://github.com/senchalabs/connect)/[union](https://github.com/flatiron/union)
-compatibility. Best of all, the code is dead simple and dependency-free.
+middler is a lightweight middleware runner for Node.js, providing
+[express](https://github.com/visionmedia/express)-like routing and
+[union](https://github.com/flatiron/union) compatibility. Best of all, the code
+is dead simple and dependency-free.
 
 Enjoy!
 
