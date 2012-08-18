@@ -3,23 +3,46 @@ middler
 
 A trivial middleware runner
 
-Usage
------
+Basic usage
+-----------
 
 ```javascript
 var middler = require('middler')
-  , http = require('http')
+  , server = require('http').createServer()
   , buffet = require('buffet')('./public')
 
-var server = http.createServer();
-middler(server, [
-  buffet,
-  function(req, res, next) {
+middler(server)
+  .add(buffet)
+  .add(function(req, res, next) {
     // ... do some stuff
     next();
-  },
-  buffet.notFound
-]);
+  })
+  .add(buffet.notFound);
+```
+
+Routing
+-------
+
+```javascript
+middler(server)
+  .get('/robots.txt', function (req, res, next) {
+    res.end('humans only!');
+  })
+  .post('/posts/:id', function (req, res, next) {
+    // req.params.id available
+  });
+```
+
+[union](https://github.com/flatiron/union) compatibility
+--------------------------------------------------------
+
+```javascript
+middler(server)
+  .add(function () {
+    // this.req
+    // this.res
+    this.res.emit('next');
+  });
 ```
 
 License
