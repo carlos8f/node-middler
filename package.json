@@ -21,6 +21,10 @@
     "node": ">= 0.6.0"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "superagent": "*"
+  },
+  "dependencies": {
+    "debug": "~0.7.0"
   }
 }
