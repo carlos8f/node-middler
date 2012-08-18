@@ -7,7 +7,7 @@ describe('union compatibility', function () {
       middler(server)
         .add(function () {
           this.res.test = true;
-          this.emit('next');
+          this.res.emit('next');
         })
         .add(function () {
           assert.equal(this.res.test, true);
