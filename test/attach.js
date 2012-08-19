@@ -12,8 +12,8 @@ describe('attach', function () {
       .add(function (req, res, next) {
         res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
         res.end('hello world');
-      });
-    middler(server, instance);
+      })
+      .attach(server);
 
     request.get('http://localhost:' + port + '/', function (res) {
       assert.equal(res.statusCode, 200);
