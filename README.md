@@ -36,6 +36,8 @@ middler(server)
     next();
   })
   .add(buffet.notFound);
+
+server.listen(3000);
 ```
 
 Routing
