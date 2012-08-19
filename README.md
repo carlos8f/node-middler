@@ -3,6 +3,8 @@ middler
 
 An embeddable middleware runner
 
+[![Build Status](https://secure.travis-ci.org/carlos8f/node-middler.png?branch=master)](http://travis-ci.org/carlos8f/node-middler)
+
 Idea
 ----
 
