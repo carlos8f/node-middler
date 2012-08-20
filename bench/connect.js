@@ -3,12 +3,6 @@ var connect = require('connect')
 
 var app = connect();
 
-for (var i = 0; i < 100; i++) {
-  app.use(function (req, res, next) {
-    next();
-  });
-}
-
 app.use(function (req, res, next) {
   res.end('hello world');
 });
