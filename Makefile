@@ -6,7 +6,14 @@ test:
 
 bench: install-bench bench-middleware bench-routes
 
+check =										\
+	if [ -z `which siege` ]; then						\
+		echo "please install siege. http://www.joedog.org/siege-home/";	\
+		exit 1;								\
+	fi
+
 install-bench:
+	@$(call check)
 	@cd bench
 	@npm install
 	@cd ..
