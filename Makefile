@@ -14,34 +14,32 @@ check =										\
 
 install-bench:
 	@$(call check)
-	@cd bench
-	@npm install
-	@cd ..
+	@cd bench; npm install
 
 bench-middleware:
 	@echo "middleware\n==========" && echo
 
 	@echo "middler\n-------"
 	@sleep 10
-	@./bench/bench.js middler && echo
+	@cd bench; ./bench.js middler && echo
 	@echo "union\n-----"
 	@sleep 10
-	@./bench/bench.js union && echo
+	@cd bench; ./bench.js union && echo
 	@echo "connect\n-------"
 	@sleep 10
-	@./bench/bench.js connect && echo
+	@cd bench; ./bench.js connect && echo
 
 bench-routes:
 	@echo "routes\n======" && echo
 
 	@echo "middler\n-------"
 	@sleep 10
-	@./bench/bench.js middler-routes /test/123 && echo
+	@cd bench; ./bench.js middler-routes /test/123 && echo
 	@echo "director\n--------"
 	@sleep 10
-	@./bench/bench.js director-routes /test/123 && echo
+	@cd bench; ./bench.js director-routes /test/123 && echo
 	@echo "express\n-------"
 	@sleep 10
-	@./bench/bench.js express-routes /test/123 && echo
+	@cd bench; ./bench.js express-routes /test/123 && echo
 
 .PHONY: test bench

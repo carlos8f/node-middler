@@ -1,4 +1,6 @@
 {
+  "name": "middler-benchmarks",
+  "version": "0.0.0",
   "dependencies": {
     "express": "~3.0.0rc3",
     "director": "~1.1.3",

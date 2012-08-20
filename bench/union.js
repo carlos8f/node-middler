@@ -1,13 +1,11 @@
-var union = require('union')
-  , before = []
-
-before.push(function (req, res) {
-  res.end('hello world');
-});
+var union = require('union');
 
 var server = union.createServer({
-  buffer: false,
-  before: before
+  before: [
+    function (req, res) {
+      res.end('hello world');
+    }
+  ]
 });
 
 server.listen(0);

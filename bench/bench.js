@@ -11,6 +11,9 @@ runner.stdout.once('data', function (chunk) {
 
   var output = '';
 
+  siege.stdout.on('data', function (chunk) {
+    output += chunk;
+  });
   siege.stderr.on('data', function (chunk) {
     output += chunk;
   });
