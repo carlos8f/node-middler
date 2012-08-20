@@ -22,5 +22,8 @@
   "devDependencies": {
     "mocha": "*",
     "superagent": "*"
+  },
+  "dependencies": {
+    "director": "~1.1.3"
   }
 }

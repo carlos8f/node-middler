@@ -2,13 +2,14 @@ var middler = require('../')()
   , server = require('http').createServer()
 
 for (var i = 0; i < 100; i++) {
-  middler.add(function (req, res, next) {
+  middler.get('/test/' + i, function (req, res, next) {
+    res.write('what\'s up!\n\n');
     next();
   });
 }
 middler
-  .add(function (req, res, next) {
-    res.end('hello world');
+  .get('/test/:id', function (req, res, next) {
+    res.end('hello world ' + req.params.id);
   })
   .attach(server);
 

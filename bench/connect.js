@@ -16,4 +16,4 @@ app.use(function (req, res, next) {
 var server = http.createServer(app);
 
 server.listen(0);
-process.stdout.write(String(server.address().port));
+console.log(server.address().port);

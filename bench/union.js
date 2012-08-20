@@ -17,4 +17,4 @@ var server = union.createServer({
 });
 
 server.listen(0);
-process.stdout.write(String(server.address().port));
+console.log(server.address().port);
