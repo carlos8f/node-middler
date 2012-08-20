@@ -66,7 +66,7 @@ describe('routing', function () {
   });
 
   it('can remove a middleware', function (done) {
-    middler(server).remove(rootArgs);
+    middler(server).remove(rootArgs.fn);
     request.get(baseUrl + '/', function (res) {
       assertRes(res, 'not found', 404);
       done();

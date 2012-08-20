@@ -5,6 +5,6 @@ module.exports = exports = function middler (server, fn) {
 
 exports.parseUrl = require('./lib/parseUrl');
 exports.pathRegExp = require('./lib/pathRegExp');
-exports.matcher = require('./lib/matcher');
+exports.Item = require('./lib/item');
 exports.Middler = require('./lib/middler');
 exports.attach = require('./lib/attach');
