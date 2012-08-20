@@ -7,7 +7,7 @@ var spawn = require('child_process').spawn
 var runner = spawn('node', [require('path').resolve(__dirname, './' + runner)]);
 runner.stdout.once('data', function (chunk) {
   var port = parseInt(chunk, 10);
-  var siege = spawn('siege', ['-b', '-t', '10s', 'http://localhost:' + port + testPath]);
+  var siege = spawn('siege', ['-b', '-t', '30s', 'http://localhost:' + port + testPath]);
 
   var output = '';
 
