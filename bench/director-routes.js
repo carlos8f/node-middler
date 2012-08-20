@@ -14,12 +14,6 @@ var server = union.createServer({
   ]
 });
 
-for (var i = 0; i < 100; i++) {
-  router.get('/test/' + i, function () {
-    this.res.write('what\'s up!\n\n');
-    this.res.emit('next');
-  });
-}
 router.get('/test/:id', function (id) {
   this.res.end('hello world ' + id);
 });

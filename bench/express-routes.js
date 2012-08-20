@@ -8,12 +8,6 @@ app.configure(function(){
   app.use(app.router);
 });
 
-for (var i = 0; i < 100; i++) {
-  app.get('/test/' + i, function (req, res, next) {
-    res.write('what\'s up!\n\n');
-    next();
-  });
-}
 app.get('/test/:id', function (req, res, next) {
   res.end('hello world ' + req.params.id);
 });
