@@ -8,12 +8,14 @@ var spawn = require('child_process').spawn
 var testServer = spawn('node', [require('path').resolve(__dirname, './' + test)]);
 testServer.stdout.once('data', function (chunk) {
   var port = parseInt(chunk, 10)
+    , id = idgen()
     , baseUrl = 'http://localhost:' + port
-    , args = ['-b', '-t', '30s']
+    , logFilePath = '/tmp/middler-benchmark-' + id + '.log'
+    , args = ['-b', '-t', '30s', '--log=' + logFilePath]
 
   if (test.indexOf('routes') !== -1) {
     var urls = []
-      , urlFilePath = '/tmp/middler-benchmark-' + idgen() + '.txt'
+      , urlFilePath = '/tmp/middler-benchmark-' + id + '.txt'
 
     for (var i = 1; i <= 100; i++) {
       urls.push(baseUrl + '/test/' + i);
@@ -37,6 +39,7 @@ testServer.stdout.once('data', function (chunk) {
   siege.on('close', function () {
     console.log(output);
     // console.log(output.match(/([\d\.]+ trans\/sec)/)[1]);
+    fs.unlinkSync(logFilePath);
     if (typeof urlFilePath !== 'undefined') {
       fs.unlinkSync(urlFilePath);
     }
