@@ -1,25 +1,45 @@
 #!/usr/bin/env node
 
 var spawn = require('child_process').spawn
-  , runner = process.argv[2]
-  , testPath = process.argv[3] || '/'
+  , test = process.argv[2]
+  , fs = require('fs')
+  , idgen = require('idgen')
 
-var runner = spawn('node', [require('path').resolve(__dirname, './' + runner)]);
-runner.stdout.once('data', function (chunk) {
-  var port = parseInt(chunk, 10);
-  var siege = spawn('siege', ['-b', '-t', '30s', 'http://localhost:' + port + testPath]);
+var testServer = spawn('node', [require('path').resolve(__dirname, './' + test)]);
+testServer.stdout.once('data', function (chunk) {
+  var port = parseInt(chunk, 10)
+    , baseUrl = 'http://localhost:' + port
+    , args = ['-b', '-t', '30s']
 
-  var output = '';
+  if (test.indexOf('routes') !== -1) {
+    var urls = []
+      , urlFilePath = '/tmp/middler-benchmark-' + idgen() + '.txt'
 
-  siege.stdout.on('data', function (chunk) {
-    output += chunk;
-  });
+    for (var i = 1; i <= 100; i++) {
+      urls.push(baseUrl + '/test/' + i);
+    }
+    // Repeat all the urls, in case there is caching.
+    urls = urls.concat(urls);
+
+    fs.writeFileSync(urlFilePath, urls.join('\n'));
+    args = args.concat(['-f', urlFilePath]);
+  }
+  else {
+    args.push(baseUrl + '/');
+  }
+  var siege = spawn('siege', args)
+    , output = ''
+
   siege.stderr.on('data', function (chunk) {
     output += chunk;
   });
 
   siege.on('close', function () {
-    console.log(output.match(/([\d\.]+ trans\/sec)/)[1]);
-    runner.kill();
+    console.log(output);
+    // console.log(output.match(/([\d\.]+ trans\/sec)/)[1]);
+    if (typeof urlFilePath !== 'undefined') {
+      fs.unlinkSync(urlFilePath);
+    }
+    testServer.kill();
   });
 });

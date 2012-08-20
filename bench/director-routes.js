@@ -14,9 +14,11 @@ var server = union.createServer({
   ]
 });
 
-router.get('/test/:id', function (id) {
-  this.res.end('hello world ' + id);
-});
+for (var i = 1; i <= 100; i++) {
+  router.get('/test/' + i, function () {
+    this.res.end('test #' + i);
+  });
+}
 
 server.listen(0);
 console.log(server.address().port);

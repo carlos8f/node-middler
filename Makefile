@@ -34,12 +34,12 @@ bench-routes:
 
 	@echo "middler\n-------"
 	@sleep 10
-	@cd bench; ./bench.js middler-routes /test/123 && echo
+	@cd bench; ./bench.js middler-routes && echo
 	@echo "director\n--------"
 	@sleep 10
-	@cd bench; ./bench.js director-routes /test/123 && echo
+	@cd bench; ./bench.js director-routes && echo
 	@echo "express\n-------"
 	@sleep 10
-	@cd bench; ./bench.js express-routes /test/123 && echo
+	@cd bench; ./bench.js express-routes && echo
 
 .PHONY: test bench
