@@ -119,7 +119,7 @@ middler(server)
 Benchmarks
 ----------
 
-To run benchmarks vs. competing middleware, type `make bench` in the middler root.
+See [here](https://github.com/carlos8f/node-middler/tree/master/bench)
 
 License
 -------
