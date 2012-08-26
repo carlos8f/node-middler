@@ -14,6 +14,7 @@ check =										\
 
 install-bench:
 	@$(call check)
+	@npm install
 	@cd bench; npm install
 
 bench-middleware:

@@ -7,5 +7,5 @@ middler
   })
   .attach(server);
 
-server.listen(0, 64000);
+server.listen(0);
 console.log(server.address().port);

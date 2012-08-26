@@ -116,6 +116,11 @@ middler(server)
   });
 ```
 
+Benchmarks
+----------
+
+To run benchmarks vs. competing middleware, type `make bench` in the middler root.
+
 License
 -------
 
