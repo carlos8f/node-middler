@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "superagent": "*"
+    "superagent": "*",
+    "benchmarx": "~0.2.2"
   }
 }

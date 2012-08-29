@@ -119,7 +119,15 @@ middler(server)
 Benchmarks
 ----------
 
-See [here](https://github.com/carlos8f/node-middler/tree/master/bench)
+In the middler root, run:
+
+```bash
+$ make bench
+```
+
+Brought to you by [benchmarx](https://github.com/carlos8f/node-benchmarx).
+
+My results: https://gist.github.com/3473117
 
 License
 -------

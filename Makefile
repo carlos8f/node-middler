@@ -4,7 +4,7 @@ test:
 		--bail \
 		--require test/common.js
 
-bench: install-bench bench-middleware bench-routes
+bench: install-bench bench-middleware bench-routing
 
 check =										\
 	if [ -z `which siege` ]; then						\
@@ -17,30 +17,17 @@ install-bench:
 	@npm install
 	@cd bench; npm install
 
-bench-middleware:
-	@echo "middleware\n==========" && echo
+bench-middleware: install-bench
+	@./node_modules/.bin/benchmarx \
+	  --title "middleware" \
+		--runner siege \
+		bench/middleware/*.js
 
-	@echo "middler\n-------"
-	@sleep 10
-	@cd bench; ./bench.js middler && echo
-	@echo "union\n-----"
-	@sleep 10
-	@cd bench; ./bench.js union && echo
-	@echo "connect\n-------"
-	@sleep 10
-	@cd bench; ./bench.js connect && echo
-
-bench-routes:
-	@echo "routes\n======" && echo
-
-	@echo "middler\n-------"
-	@sleep 10
-	@cd bench; ./bench.js middler-routes && echo
-	@echo "director\n--------"
-	@sleep 10
-	@cd bench; ./bench.js director-routes && echo
-	@echo "express\n-------"
-	@sleep 10
-	@cd bench; ./bench.js express-routes && echo
+bench-routing: install-bench
+	@./node_modules/.bin/benchmarx \
+	  --title "routing" \
+		--runner siege \
+		--path bench/paths.txt \
+		bench/routing/*.js
 
 .PHONY: test bench
