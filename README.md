@@ -119,6 +119,26 @@ middler(server)
 Benchmarks
 ----------
 
+My results: https://gist.github.com/3473117
+
+### App with single middleware, "hello world"
+
+```
+****************  middler (7646.63 rps)
+****************  connect (7198.48 rps)
+*******           union (3057.69 rps)
+```
+
+### App with 100 routes
+
+```
+****************  middler-routes (6870.59 rps)
+***************   express-routes (6335.41 rps)
+******            director-routes (2414.89 rps)
+```
+
+### Running your own benchmark
+
 In the middler root, run:
 
 ```bash
@@ -126,8 +146,6 @@ $ make bench
 ```
 
 Brought to you by [benchmarx](https://github.com/carlos8f/node-benchmarx).
-
-My results: https://gist.github.com/3473117
 
 License
 -------
