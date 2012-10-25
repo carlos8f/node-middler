@@ -104,6 +104,17 @@ var app = connect()
 http.createServer(app).listen(3000);
 ```
 
+Handling errors
+---------------
+
+As of v0.5.0, middler is an EventEmitter, and will emit an `error` event (if
+you listen for it).
+
+- If there is no `error` listener, middler will terminate the response with a `500
+Internal Server Error` status and no body. The error and stack trace will be printed
+to `process.stderr`.
+- If there are `error` listener(s), they will be passed `err, req, res`.
+
 [union](https://github.com/flatiron/union) compatibility
 --------------------------------------------------------
 
