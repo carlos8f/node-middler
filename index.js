@@ -8,3 +8,4 @@ exports.pathRegExp = require('./lib/pathRegExp');
 exports.Item = require('./lib/item');
 exports.Middler = require('./lib/middler');
 exports.attach = require('./lib/attach');
+exports.detach = require('./lib/detach');
