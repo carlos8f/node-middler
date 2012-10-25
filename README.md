@@ -20,7 +20,7 @@ Install
 -------
 
 ```
-$ npm install middler
+$ npm install --save middler
 ```
 
 Basic usage
@@ -72,11 +72,28 @@ middler(server)
   .post('/posts', [bodyParser, formHandler]);
 ```
 
+Alternate attach syntax
+-----------------------
+
+```js
+var server = require('http').createServer();
+var m = middler()
+  .add(function (req, res, next) {
+    // handle request...
+  })
+  .attach(server);
+
+// you can also detach!
+m.detach();
+
+// m can be attached do a different server now
+```
+
 middler is a middleware, too
 ----------------------------
 
-Writing some middleware and need routes? Just use `middler().handler` which
-returns a middleware handler!
+Writing some middleware and need routes? Build your middler chain up and return
+`middler().handler`, which itself acts as a middleware!
 
 ```javascript
 var connect = require('connect')
