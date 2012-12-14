@@ -12,6 +12,16 @@ describe('handler array', function () {
       howmany: '1'
     });
     req.message = 'teapot';
+    next();
+  }
+
+  function checkAnonParams (req, res, next) {
+    assert.deepEqual(req.params, {
+      color: 'red',
+      '0': 'sport'
+    });
+    req.message = 'vehicle';
+    next();
   }
 
   function hello(req, res, next) {
@@ -36,7 +46,8 @@ describe('handler array', function () {
         .get('/', [hello, world, message])
         .get(['/sandwich', '/apple'], [hello, world, message])
         .add(['/hello', '/world'], ['get', 'post'], [hello, world, message])
-        .add(['get', 'post'], ['/youare/:where/:what/*', '/iam/:what/:where/:howmany'], [checkParams, message])
+        .add(['get', 'post'], ['/youare/:where/:what/1', '/iam/:what/:where/:howmany'], [checkParams, message])
+        .add(['get', 'post'], ['/boats/:color/*', '/cars/:color/*'], [checkAnonParams, message])
         .add(function (req, res) {
           writeRes(res, 'not found', 404);
         });
@@ -117,6 +128,20 @@ describe('handler array', function () {
   it('post /youare/kitchen/teapot/1', function (done) {
     request.post(baseUrl + '/youare/kitchen/teapot/1', function (res) {
       assertRes(res, 'teapot');
+      done();
+    });
+  });
+
+  it('get /cars/red/sport', function (done) {
+    request.get(baseUrl + '/cars/red/sport', function (res) {
+      assertRes(res, 'vehicle');
+      done();
+    });
+  });
+
+  it('post /boats/red/sport', function (done) {
+    request.post(baseUrl + '/boats/red/sport', function (res) {
+      assertRes(res, 'vehicle');
       done();
     });
   });
