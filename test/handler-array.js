@@ -1,6 +1,19 @@
 describe('handler array', function () {
   var baseUrl, server;
 
+  function checkParams (req, res, next) {
+    if (req.url.match(/^\/youare\//)) {
+      // optional param
+      req.params.howmany = '1';
+    }
+    assert.deepEqual(req.params, {
+      what: 'teapot',
+      where: 'kitchen',
+      howmany: '1'
+    });
+    req.message = 'teapot';
+  }
+
   function hello(req, res, next) {
     req.message = 'hello';
     next();
@@ -23,6 +36,7 @@ describe('handler array', function () {
         .get('/', [hello, world, message])
         .get(['/sandwich', '/apple'], [hello, world, message])
         .add(['/hello', '/world'], ['get', 'post'], [hello, world, message])
+        .add(['get', 'post'], ['/youare/:where/:what/*', '/iam/:what/:where/:howmany'], [checkParams, message])
         .add(function (req, res) {
           writeRes(res, 'not found', 404);
         });
@@ -89,6 +103,20 @@ describe('handler array', function () {
   it('put /world', function (done) {
     request.put(baseUrl + '/world', function (res) {
       assertRes(res, 'not found', 404);
+      done();
+    });
+  });
+
+  it('get /iam/teapot/kitchen/1', function (done) {
+    request.get(baseUrl + '/iam/teapot/kitchen/1', function (res) {
+      assertRes(res, 'teapot');
+      done();
+    });
+  });
+
+  it('post /youare/kitchen/teapot/1', function (done) {
+    request.post(baseUrl + '/youare/kitchen/teapot/1', function (res) {
+      assertRes(res, 'teapot');
       done();
     });
   });
