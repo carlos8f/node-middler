@@ -16,14 +16,15 @@ describe('dupe', function () {
 
   it('does not dupe', function (done) {
     middler(server)
-      .add(['get', 'post'], '/services/*', [mw1, mw2, mw3, mw4])
+      .post('/services/foo', [mw1, mw2])
+      .add(['get', 'post'], '/services/*', [mw3, mw4])
       .add(function (req, res) {
         assert.deepEqual(ran, ['mw1', 'mw2', 'mw3', 'mw4']);
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.end('ok');
       })
 
-    request.get('http://localhost:' + port + '/services/foo', function (res) {
+    request.post('http://localhost:' + port + '/services/foo', function (res) {
       assert.equal(res.statusCode, 200);
       assert.equal(res.text, 'ok');
       done();
