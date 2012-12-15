@@ -1,6 +1,6 @@
 {
   "name": "middler",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "An embeddable middleware runner",
   "scripts": {
     "test": "make test"
