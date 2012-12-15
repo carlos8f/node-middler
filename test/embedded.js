@@ -1,11 +1,11 @@
 describe('embedded', function () {
-  var server, baseUrl;
+  var server, baseUrl, m;
   before(function (done) {
     listen(function (s, p) {
       server = s;
       baseUrl = 'http://localhost:' + p;
 
-      middler(server)
+      m = middler(server)
         .get('/', function (req, res, next) {
           res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
           res.end('hello world');
@@ -17,6 +17,17 @@ describe('embedded', function () {
           .get('/stuff/re', function (req, res, next) {
             writeRes(res, 'a drop of golden sun');
           })
+          .get('/stuff/error', function (req, res, next) {
+            next(new Error('whoops!'));
+          })
+          .get('/stuff/error2',[
+            function (req, res, next) {
+              next(new Error('whoops2!'));
+            },
+            function (req, res, next) {
+              assert.fail('got here', 'should never get here');
+            }
+          ])
           .add(function (req, res, next) {
             writeRes(res, 'stuff not found', 404);
           })
@@ -60,6 +71,28 @@ describe('embedded', function () {
   it('get /etc', function (done) {
     request.get(baseUrl + '/etc', function (res) {
       assertRes(res, 'not found', 404);
+      done();
+    });
+  });
+
+  it('get /stuff/error', function (done) {
+    m.once('error', function (err, req, res) {
+      assert.equal(err.message, 'whoops!');
+      writeRes(res, 'handled', 500);
+    });
+    request.get(baseUrl + '/stuff/error', function (res) {
+      assertRes(res, 'handled', 500);
+      done();
+    });
+  });
+
+  it('get /stuff/error2', function (done) {
+    m.once('error', function (err, req, res) {
+      assert.equal(err.message, 'whoops2!');
+      writeRes(res, 'handled2', 500);
+    });
+    request.get(baseUrl + '/stuff/error2', function (res) {
+      assertRes(res, 'handled2', 500);
       done();
     });
   });
