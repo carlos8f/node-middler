@@ -31,6 +31,26 @@ describe('error', function () {
     });
   });
 
+  it('embedded custom error handler', function (done) {
+    var embedded = middler()
+      .add(function (req, res, next) {
+        next(new Error('handled!'));
+      })
+      .on('error', function (err, req, res) {
+        res.writeHead(501, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({error: err + ''}));
+      });
+    m.first(embedded.handler);
+
+    request.get('http://localhost:' + port + '/', function (res) {
+      assert.equal(res.statusCode, 501);
+      assert.deepEqual(res.body, {
+        error: 'Error: handled!'
+      });
+      done();
+    });
+  });
+
   it('closes the server', function (done) {
     server.once('close', done);
     server.close();
