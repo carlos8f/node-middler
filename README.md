@@ -195,18 +195,33 @@ conditions match.
 Handling errors
 ---------------
 
-As of v0.5.0, middler is an EventEmitter, and will emit an `error` event (if
-you listen for it).
+If your application encounters an error, pass an Error object to the `next`
+callback. The rest of the middleware chain will not run, and what middler does
+with the error is dependent on the following conditions:
 
-- If there are `error` listener(s), they will be invoked with `err, req, res`
-  and the error will not propagate further.
+- If there are `error` event listener(s) on the middler instance, they will be
+  invoked with `err, req, res` and the error will not propagate further.
 - If there is no `error` listener:
-  - In the case of an embedded middler (`middler().handler` as in the above 
-    section), the error will be passed to the parent chain, i.e. `next(err)`.
-  - Otherwise, the default error handler will run which terminates the response
-    with `500 Internal Server Error` status and no body. The error and stack
-    trace will be printed to `process.stderr`.
+    - In the case of an embedded middler, the error will propagate to the parent
+      chain, i.e. `next(err)`.
+    - Otherwise, the default error handler will run which terminates the response
+      with `500 Internal Server Error` status and no body. The error and stack
+      trace will be printed to `process.stderr`.
 
+Example custom error handler:
+
+```js
+middler(server)
+  .on('error', function (err, req, res) {
+    res.writeHead(500, {'Content-Type': 'text/plain'});
+    console.error(err.stack || err);
+    res.end('sorry, blame it on Rackspace!');
+  })
+  .add(function (req, res, next) {
+    // next() can accept an error
+    next(new Error('whoops!'));
+  })
+```
 
 Alternate attach syntax
 -----------------------
@@ -224,8 +239,6 @@ router.detach();
 
 // router can be attached do a different server now
 ```
-
-------------
 
 [union](https://github.com/flatiron/union) compatibility
 --------------------------------------------------------
@@ -270,8 +283,7 @@ $ make bench
 
 Brought to you by [benchmarx](https://github.com/carlos8f/node-benchmarx).
 
-License
--------
+---
 
 Developed by [Terra Eclipse](http://www.terraeclipse.com)
 --------------------------------------------------------
@@ -279,7 +291,6 @@ Terra Eclipse, Inc. is a nationally recognized political technology and
 strategy firm located in Aptos, CA and Washington, D.C.
 
 [http://www.terraeclipse.com](http://www.terraeclipse.com)
-
 
 License: MIT
 ------------
