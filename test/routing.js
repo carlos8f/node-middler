@@ -28,6 +28,10 @@ describe('routing', function () {
         .get('/posts/:post', function (req, res, next) {
           writeRes(res, 'post: ' + req.params.post);
         })
+        .add('/services/*/*', function (req, res, next) {
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.end(JSON.stringify(req.params));
+        })
         .add(function (req, res) {
           writeRes(res, 'not found', 404);
         });
@@ -79,6 +83,13 @@ describe('routing', function () {
     });
     request.get(baseUrl + '/posts', function (res) {
       assertRes(res, 'whoa!', 500);
+      done();
+    });
+  });
+
+  it('can use unnamed params', function (done) {
+    request.put(baseUrl + '/services/foo/bar', function (res) {
+      assert.deepEqual(res.body, ['foo', 'bar']);
       done();
     });
   });
