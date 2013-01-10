@@ -77,19 +77,27 @@ describe('routing', function () {
     });
   });
 
+  it('can use unnamed params', function (done) {
+    request.put(baseUrl + '/services/foo/bar', function (res) {
+      assert.deepEqual(res.body, ['foo', 'bar']);
+      done();
+    });
+  });
+
+  it('can remove a middleware by path', function (done) {
+    middler(server).remove('/services/*/*');
+    request.get(baseUrl + '/services/foo/bar', function (res) {
+      assertRes(res, 'not found', 404);
+      done();
+    });
+  });
+
   it('can add a middleware to run first', function (done) {
     middler(server).first('/posts', function (req, res, next) {
       writeRes(res, 'whoa!', 500);
     });
     request.get(baseUrl + '/posts', function (res) {
       assertRes(res, 'whoa!', 500);
-      done();
-    });
-  });
-
-  it('can use unnamed params', function (done) {
-    request.put(baseUrl + '/services/foo/bar', function (res) {
-      assert.deepEqual(res.body, ['foo', 'bar']);
       done();
     });
   });
