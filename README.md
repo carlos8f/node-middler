@@ -187,6 +187,8 @@ function formHandler (req, res, next) { // do something with req.body ... }
 
 middler(server)
   .post('/posts', [bodyParser, formHandler])
+  // or even the "flat style"
+  .post('/posts', '/comments', bodyParser, formHandler)
 ```
 
 When multiple handlers are added, they execute in series when the other
