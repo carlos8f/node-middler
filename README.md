@@ -76,6 +76,12 @@ middler(server)
   .put('/articles/*/*', function (req, res, next) {
     // req.params is an array with 2 elements
   })
+  .get('*.mydomain.com', '/', function (req, res, next) {
+    // vhost matcher: handle the root path on *.mydomain.com
+  })
+  .add('localhost', function (req, res, next) {
+    // vhost matcher: only handle requests to localhost
+  })
 ```
 
 Tips:
