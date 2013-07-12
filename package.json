@@ -23,5 +23,9 @@
     "mocha": "*",
     "superagent": "*",
     "benchmarx": "~0.2.2"
+  },
+  "dependencies": {
+    "minimatch": "~0.2.12",
+    "methods": "0.0.1"
   }
 }
