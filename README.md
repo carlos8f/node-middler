@@ -12,7 +12,7 @@ middler is a flexible, tiny middleware runner for Node.js which can easily be
 embedded in an existing http server or even an existing middleware chain.
 Also provided is [express](https://github.com/visionmedia/express)-like routing
 and [union](https://github.com/flatiron/union) compatibility. Best of all, the
-code is readable, compact, tested, benchmarked, MIT-licensed, and dependency-free.
+code is readable, compact, tested, benchmarked, and MIT-licensed.
 
 Enjoy!
 
