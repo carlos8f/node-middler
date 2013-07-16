@@ -14,7 +14,6 @@ describe('error', function () {
   it('default error handler', function (done) {
     request.get('http://localhost:' + port + '/', function (res) {
       assert.equal(res.statusCode, 500);
-      assert.equal(res.text, undefined);
       done();
     });
   });
