@@ -25,8 +25,6 @@
     "benchmarx": "~0.2.2"
   },
   "dependencies": {
-    "minimatch": "~0.2.12",
-    "methods": "0.0.1",
-    "path-to-regexp": "0.0.2"
+    "bladerunner": "^0.1.0"
   }
 }

@@ -11,13 +11,6 @@ describe('error', function () {
     });
   });
 
-  it('default error handler', function (done) {
-    request.get('http://localhost:' + port + '/', function (res) {
-      assert.equal(res.statusCode, 500);
-      done();
-    });
-  });
-
   it('custom error handler', function (done) {
     m.on('error', function (err, req, res) {
       res.writeHead(400, {'Content-Type': 'text/plain'});
