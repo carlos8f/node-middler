@@ -212,9 +212,7 @@ with the error is dependent on the following conditions:
 - If there is no `error` listener:
     - In the case of an embedded middler, the error will propagate to the parent
       chain, i.e. `next(err)`.
-    - Otherwise, the default error handler will run which terminates the response
-      with `500 Internal Server Error` status and no body. The error and stack
-      trace will be printed to `process.stderr`.
+    - Otherwise, the error will be thrown!
 
 Example custom error handler:
 
@@ -251,14 +249,7 @@ router.detach();
 [union](https://github.com/flatiron/union) compatibility
 --------------------------------------------------------
 
-```javascript
-middler(server)
-  .add(function () {
-    // this.req
-    // this.res
-    this.res.emit('next');
-  })
-```
+Union compatibility support has been dropped as of middler v0.8.0. 
 
 Benchmarks
 ----------
