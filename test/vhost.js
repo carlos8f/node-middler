@@ -22,14 +22,14 @@ describe('vhost matching', function () {
   });
 
   it('get localhost', function (done) {
-    request.get(baseUrl + '/', function (res) {
+    request.get(baseUrl + '/', function (err, res) {
       assertRes(res, 'hi, i am localhost');
       done();
     });
   });
 
   it('get ipv4', function (done) {
-    request.get(baseUrl2 + '/', function (res) {
+    request.get(baseUrl2 + '/', function (err, res) {
       assertRes(res, 'hi, i am ipv4');
       done();
     });

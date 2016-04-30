@@ -16,7 +16,7 @@ describe('error', function () {
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.end(err + '');
     });
-    request.get('http://localhost:' + port + '/', function (res) {
+    request.get('http://localhost:' + port + '/', function (err, res) {
       assert.equal(res.statusCode, 400);
       assert.equal(res.text, 'Error: i am an error...');
       done();
@@ -34,7 +34,7 @@ describe('error', function () {
       });
     m.first(embedded.handler);
 
-    request.get('http://localhost:' + port + '/', function (res) {
+    request.get('http://localhost:' + port + '/', function (err, res) {
       assert.equal(res.statusCode, 501);
       assert.deepEqual(res.body, {
         error: 'Error: handled!'

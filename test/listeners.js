@@ -17,14 +17,14 @@ describe('existing listeners', function () {
   });
 
   it('gets middler path', function (done) {
-    request.get(baseUrl + '/', function (res) {
+    request.get(baseUrl + '/', function (err, res) {
       assertRes(res, 'hi from middler');
       done();
     });
   });
 
   it('falls back to listener', function (done) {
-    request.get(baseUrl + '/stuff', function (res) {
+    request.get(baseUrl + '/stuff', function (err, res) {
       assertRes(res, 'hi from existing listener');
       done();
     });

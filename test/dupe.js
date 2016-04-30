@@ -24,7 +24,7 @@ describe('dupe', function () {
         res.end('ok');
       })
 
-    request.post('http://localhost:' + port + '/services/foo', function (res) {
+    request.post('http://localhost:' + port + '/services/foo', function (err, res) {
       assert.equal(res.statusCode, 200);
       assert.equal(res.text, 'ok');
       done();

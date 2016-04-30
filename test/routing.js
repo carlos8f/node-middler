@@ -40,7 +40,7 @@ describe('routing', function () {
   });
 
   it('get /', function (done) {
-    request.get(baseUrl + '/', function (res) {
+    request.get(baseUrl + '/', function (err, res) {
       assertRes(res, 'welcome');
       done();
     });
@@ -49,21 +49,21 @@ describe('routing', function () {
   it('post /posts', function (done) {
     request.post(baseUrl + '/posts')
       .send({post: 'my post'})
-      .end(function (res) {
+      .end(function (err, res) {
         assertRes(res, 'post created');
         done();
       });
   });
 
   it('get /posts', function (done) {
-    request.get(baseUrl + '/posts', function (res) {
+    request.get(baseUrl + '/posts', function (err, res) {
       assertRes(res, 'list of posts');
       done();
     });
   });
 
   it('get /posts/:post', function (done) {
-    request.get(baseUrl + '/posts/512', function (res) {
+    request.get(baseUrl + '/posts/512', function (err, res) {
       assertRes(res, 'post: 512');
       done();
     });
@@ -71,14 +71,14 @@ describe('routing', function () {
 
   it('can remove a middleware', function (done) {
     middler(server).remove(rootArgs.fn);
-    request.get(baseUrl + '/', function (res) {
+    request.get(baseUrl + '/', function (err, res) {
       assertRes(res, 'not found', 404);
       done();
     });
   });
 
   it('can use unnamed params', function (done) {
-    request.put(baseUrl + '/services/foo/bar', function (res) {
+    request.put(baseUrl + '/services/foo/bar', function (err, res) {
       assert.deepEqual(res.body, ['foo', 'bar']);
       done();
     });
@@ -86,7 +86,7 @@ describe('routing', function () {
 
   it('can remove a middleware by path', function (done) {
     middler(server).remove('/services/*/*');
-    request.get(baseUrl + '/services/foo/bar', function (res) {
+    request.get(baseUrl + '/services/foo/bar', function (err, res) {
       assertRes(res, 'not found', 404);
       done();
     });
@@ -96,7 +96,7 @@ describe('routing', function () {
     middler(server).first('/posts', function (req, res, next) {
       writeRes(res, 'whoa!', 500);
     });
-    request.get(baseUrl + '/posts', function (res) {
+    request.get(baseUrl + '/posts', function (err, res) {
       assertRes(res, 'whoa!', 500);
       done();
     });

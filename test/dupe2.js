@@ -43,14 +43,14 @@ describe('dupe2', function () {
     done();
   });
   it('user/reset-password', function (done) {
-    request.post('http://localhost:' + port + '/user/reset-password', function (res) {
+    request.post('http://localhost:' + port + '/user/reset-password', function (err, res) {
       assert.equal(res.statusCode, 200);
       assert.deepEqual(res.body, ['mw1']);
       done();
     });
   });
   it('user/:id', function (done) {
-    request.post('http://localhost:' + port + '/user/123', function (res) {
+    request.post('http://localhost:' + port + '/user/123', function (err, res) {
       assert.equal(res.statusCode, 200);
       assert.deepEqual(res.body, ['mw2', 'mw3']);
       done();

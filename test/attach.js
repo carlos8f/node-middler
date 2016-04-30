@@ -18,7 +18,7 @@ describe('attach', function () {
       })
       .attach(server);
 
-    request.get('http://localhost:' + port + '/', function (res) {
+    request.get('http://localhost:' + port + '/', function (err, res) {
       assert.equal(res.statusCode, 200);
       assert.equal(res.headers['content-type'], 'text/plain; charset=utf-8');
       assert.equal(res.text, 'hello world');
@@ -33,7 +33,7 @@ describe('attach', function () {
     });
     instance.detach();
 
-    request.get('http://localhost:' + port + '/', function (res) {
+    request.get('http://localhost:' + port + '/', function (err, res) {
       assert.equal(res.statusCode, 404);
       assert.equal(res.headers['content-type'], 'text/plain');
       assert.equal(res.text, 'detached');

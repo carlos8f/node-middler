@@ -56,91 +56,91 @@ describe('handler array', function () {
   });
 
   it('get /', function (done) {
-    request.get(baseUrl + '/', function (res) {
+    request.get(baseUrl + '/', function (err, res) {
       assertRes(res, 'hello world');
       done();
     });
   });
 
   it('get /404', function (done) {
-    request.get(baseUrl + '/404', function (res) {
+    request.get(baseUrl + '/404', function (err, res) {
       assertRes(res, 'not found', 404);
       done();
     });
   });
 
   it('get /sandwich', function (done) {
-    request.get(baseUrl + '/sandwich', function (res) {
+    request.get(baseUrl + '/sandwich', function (err, res) {
       assertRes(res, 'hello world');
       done();
     });
   });
 
   it('get /apple', function (done) {
-    request.get(baseUrl + '/apple', function (res) {
+    request.get(baseUrl + '/apple', function (err, res) {
       assertRes(res, 'hello world');
       done();
     });
   });
 
   it('get /hello', function (done) {
-    request.get(baseUrl + '/hello', function (res) {
+    request.get(baseUrl + '/hello', function (err, res) {
       assertRes(res, 'hello world');
       done();
     });
   });
 
   it('post /hello', function (done) {
-    request.post(baseUrl + '/hello', function (res) {
+    request.post(baseUrl + '/hello', function (err, res) {
       assertRes(res, 'hello world');
       done();
     });
   });
 
   it('get /world', function (done) {
-    request.get(baseUrl + '/world', function (res) {
+    request.get(baseUrl + '/world', function (err, res) {
       assertRes(res, 'hello world');
       done();
     });
   });
 
   it('post /world', function (done) {
-    request.post(baseUrl + '/world', function (res) {
+    request.post(baseUrl + '/world', function (err, res) {
       assertRes(res, 'hello world');
       done();
     });
   });
 
   it('put /world', function (done) {
-    request.put(baseUrl + '/world', function (res) {
+    request.put(baseUrl + '/world', function (err, res) {
       assertRes(res, 'not found', 404);
       done();
     });
   });
 
   it('get /iam/teapot/kitchen/1', function (done) {
-    request.get(baseUrl + '/iam/teapot/kitchen/1', function (res) {
+    request.get(baseUrl + '/iam/teapot/kitchen/1', function (err, res) {
       assertRes(res, 'teapot');
       done();
     });
   });
 
   it('post /youare/kitchen/teapot/1', function (done) {
-    request.post(baseUrl + '/youare/kitchen/teapot/1', function (res) {
+    request.post(baseUrl + '/youare/kitchen/teapot/1', function (err, res) {
       assertRes(res, 'teapot');
       done();
     });
   });
 
   it('get /cars/red/sport', function (done) {
-    request.get(baseUrl + '/cars/red/sport', function (res) {
+    request.get(baseUrl + '/cars/red/sport', function (err, res) {
       assertRes(res, 'vehicle');
       done();
     });
   });
 
   it('post /boats/red/sport', function (done) {
-    request.post(baseUrl + '/boats/red/sport', function (res) {
+    request.post(baseUrl + '/boats/red/sport', function (err, res) {
       assertRes(res, 'vehicle');
       done();
     });

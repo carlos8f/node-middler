@@ -23,7 +23,7 @@ describe('weight', function () {
   });
 
   it('correct order', function (done) {
-    request.get('http://localhost:' + port + '/', function (res) {
+    request.get('http://localhost:' + port + '/', function (err, res) {
       assert.equal(res.statusCode, 200);
       assert.equal(res.text, 'one two three');
       done();

@@ -20,11 +20,11 @@
     "node": ">= 0.6.0"
   },
   "devDependencies": {
-    "mocha": "*",
-    "superagent": "*",
-    "benchmarx": "~0.2.2"
+    "benchmarx": "~0.2.2",
+    "mocha": "^2.4.5",
+    "superagent": "^1.8.3"
   },
   "dependencies": {
-    "bladerunner": "^0.1.0"
+    "bladerunner": "^0.1.1"
   }
 }
